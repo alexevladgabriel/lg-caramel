@@ -60,21 +60,8 @@ server.register(async function (fastify) {
       );
 
       connection.on("message", (message: string) => {
-        try {
-          const parsed = JSON.parse(message);
-
-          // Respond to "ping" with region info
-          if (parsed.type === "ping" && typeof parsed.timestamp === "number") {
-            connection.send(
-              JSON.stringify({
-                type: "pong",
-                timestamp: parsed.timestamp,
-              })
-            );
-          }
-        } catch (error) {
-          console.error("❌ Invalid WebSocket message:", error);
-        }
+        const sentTime = Number(message);
+        connection.socket.send(sentTime.toString()); // Send back the exact timestamp
       });
 
       connection.on("close", () => {
