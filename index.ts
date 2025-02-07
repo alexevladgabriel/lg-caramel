@@ -61,7 +61,7 @@ server.register(async function (fastify) {
 
       connection.on("message", (message: string) => {
         const sentTime = Number(message);
-        connection.socket.send(sentTime.toString()); // Send back the exact timestamp
+        connection.send(sentTime.toString()); // Send back the exact timestamp
       });
 
       connection.on("close", () => {
